@@ -5,8 +5,19 @@
 using namespace std;
 
 // TODO: Define Point struct if not given
-// struct Point {
-// };
+struct Point {
+  double x;
+  double y;
+};
+Point rotate_point(const Point& p, const Point& pivot, double theta) {
+    Point rotated;
+    rotated.x = pivot.x + (p.x - pivot.x) * cos(theta) - (p.y - pivot.y) * sin(theta);
+    rotated.y = pivot.y + (p.x - pivot.x) * sin(theta) - (p.y - pivot.y) * cos(theta);
+    if (fabs(rotated.x) < 1e-6) {
+    rotated.x = 0;
+    }
+    return rotated;
+    }
 
 void print_point_rotation(double x_before, double y_before,
                           double theta, double x_after, double y_after) {
@@ -17,7 +28,7 @@ void print_point_rotation(double x_before, double y_before,
 
 int main(int argc, char* argv[]) {
     if (argc < 2) {
-        cerr << "Usage: " << argv[0] << " <input_file>" << endl;
+        cerr << "Usage: " << argv[0] << " <input_file>" <<endl;;
         return 1;
     }
 
@@ -28,9 +39,19 @@ int main(int argc, char* argv[]) {
     }
 
     // TODO: Declare point, pivot, and angle variables
-
-
-    // TODO: Read input from file: x, y, theta, px, py
+    double x, y, theta, px, py;
+    input >> x >> y >> theta >> px >> py;
+    
+    Point p = {x, y};
+    Point pivot = {px, py};
+    Point rotated = rotate_point(p, pivot, theta);
+    
+    print_point_rotation(p.x, p.y, theta, rotated.x, rotated.y);
+    
+   
+  
+    return 0;
+}
 
 
     // TODO: Compute rotated coordinates around pivot
